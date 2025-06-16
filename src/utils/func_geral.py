@@ -1,13 +1,10 @@
 """Arquivo de funções gerais"""
-import sys
 import json
-sys.path.append('../projeto-api-vitivinicultura')
 from config.database import data_collection
 
 # função salvar arquivos no formato json.
 def salvar_arquivo(output, caminho: str):
-    """ Função que gera um backup de dados para uso nas apis."""
-    
+    """ Função que gera um backup de dados para uso nas apis.""" 
     # conteudo = json.dumps(output, indent=1, sort_keys=True)
     with open(caminho, 'w', encoding='utf-8') as file:
         # dados['data'] = output

@@ -4,7 +4,6 @@ venv/
 
 # Arquivos de ambiente e credenciais
 .env
-acesso.txt
 
 # Cache Python
 __pycache__/

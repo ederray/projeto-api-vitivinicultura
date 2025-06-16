@@ -1,8 +1,6 @@
 """ Arquivo de funções da api de Produção."""
-import sys
 import requests
 from bs4 import BeautifulSoup
-sys.path.append('../projeto-api-vitivinicultura')
 from config.models import ProducaoComercializacao
 
 # função api Produção e Comercialização

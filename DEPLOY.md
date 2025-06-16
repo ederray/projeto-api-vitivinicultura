@@ -4,7 +4,7 @@
 
 ### 1. MongoDB (Já configurado)
 ```
-MONGODB_URL=mongodb+srv://projeto5mlet:projetofiap@apiembrapa.wcmp3fv.mongodb.net/?retryWrites=true&w=majority&appName=apiEmbrapa
+MONGODB_URL=mongodb+srv://ederray:eder12345@database.2i6pa4j.mongodb.net/?retryWrites=true&w=majority&appName=Database
 ```
 
 ### 2. Redis (Já configurado)

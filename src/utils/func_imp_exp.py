@@ -1,8 +1,6 @@
 """ Arquivo de funções executadas nas apis"""
-import sys
 import requests
 from bs4 import BeautifulSoup
-sys.path.append('../projeto-api-vitivinicultura')
 from config.models import ImportacaoExportacao
 
 # função api Importação e Exportação

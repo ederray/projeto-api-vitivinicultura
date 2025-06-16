@@ -42,18 +42,20 @@ Esta API fornece acesso aos dados históricos de vitivinicultura do Brasil, incl
 
 ```
 projeto-api-vitivinicultura/
-├── app/                          # Aplicação principal
-│   ├── main.py                   # Entrada da aplicação
-│   ├── config.py                 # Configurações e variáveis
-│   └── routes/                   # Rotas da API
+├── app/                         # Aplicação principal
+│   ├── main.py                  # Entrada da aplicação
+│   ├── config.py                # Configurações e variáveis
+│   └── routes/                  # Rotas da API
 │       ├── auth.py              # Autenticação JWT
 │       └── route.py             # Endpoints de dados
-├── config/                       # Configurações do projeto
+├── config/                      # Configurações do projeto
 │   ├── database.py              # Conexão MongoDB/Redis
 │   ├── models.py                # Modelos Pydantic
 │   └── schema.py                # Schemas de dados
 ├── src/                         # Utilitários e funções
 │   └── utils/                   # Funções de scraping
+│   └── eda_preprocessing.py
+│   └── train.py
 ├── notebooks/                   # Jupyter notebooks
 ├── data/                        # Dados processados
 ├── requirements.txt             # Dependências Python
@@ -160,7 +162,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 |--------|----------|-----------|------------|
 | `GET` | `/producao` | Dados de produção | `ano` (1970-2023) |
 | `GET` | `/processamento` | Dados de processamento | `ano`, `tipo_uva` |
-| `GET` | `/processamento_completo` | Processamento completo | `ano` |
 | `GET` | `/comercializacao` | Dados de comercialização | `ano` (1970-2023) |
 | `GET` | `/importacao` | Dados de importação | `ano`, `derivado` |
 | `GET` | `/exportacao` | Dados de exportação | `ano`, `derivado` |
