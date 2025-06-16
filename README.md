@@ -1,6 +1,6 @@
 #  API de Vitivinicultura - Tech Challenge FIAP
 
-[![Deploy Status](https://img.shields.io/badge/Deploy-Live%20on%20Render-success)](https://vitivinicultura-00fv.onrender.com)
+[![Deploy Status](https://img.shields.io/badge/Deploy-Live%20on%20Render-success)](https://projeto-api-vitivinicultura-4xmq.onrender.com)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-green)](https://fastapi.tiangolo.com)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)](https://mongodb.com)
@@ -9,8 +9,10 @@ API REST completa para análise e consulta de dados de **vitivinicultura** da Em
 
 ##  **Demo Live**
 
- **URL da API**: https://vitivinicultura-00fv.onrender.com
- **Documentação Interativa**: https://vitivinicultura-00fv.onrender.com/docs
+ **URL da API**: https://projeto-api-vitivinicultura-4xmq.onrender.com
+ **Documentação Interativa**: https://projeto-api-vitivinicultura-4xmq.onrender.com/docs
+ **App Streamlit Dashboard**: https://ederray-projeto-api-vitivinicultura-dash-mhogfc.streamlit.app
+ 
 
 ##  **Sobre o Projeto**
 
@@ -34,33 +36,44 @@ Esta API fornece acesso aos dados históricos de vitivinicultura do Brasil, incl
 | **Banco de Dados** | MongoDB Atlas |
 | **Cache** | Redis (com fallback MockRedis) |
 | **Autenticação** | JWT (JSON Web Tokens) |
-| **Deploy** | Render.com |
+| **Deploy** | Render.com, Streamlit Cloud |
 | **Web Scraping** | BeautifulSoup4, Requests |
-| **Machine Learning** | Scikit-learn, Pandas, NumPy |
+| **Machine Learning** | Scikit-learn, Pandas, NumPy, PowerTransformer, PCA |
+| **Dashboard / Dataviz** | Streamlit, Matplotlib, Seaborn |
+
 
 ##  **Estrutura do Projeto**
 
 ```
 projeto-api-vitivinicultura/
-├── app/                         # Aplicação principal
+├── app/                         # Aplicação principal FastAPI
 │   ├── main.py                  # Entrada da aplicação
-│   ├── config.py                # Configurações e variáveis
+│   ├── backup.py                # Backup de dados via webscrapping
+│   ├── cloud.py                 # Envio para banco de dados
 │   └── routes/                  # Rotas da API
 │       ├── auth.py              # Autenticação JWT
+│       ├── predict.py           # Modelo de Machine Learning
 │       └── route.py             # Endpoints de dados
 ├── config/                      # Configurações do projeto
 │   ├── database.py              # Conexão MongoDB/Redis
 │   ├── models.py                # Modelos Pydantic
-│   └── schema.py                # Schemas de dados
+│   ├── schema.py                # Schemas de dados
+│   └── settings.py              # Modelo de conexão
+├── data/                        # Dados processados
+├── img/                         # Imagens usadas no dashboard
+├── models/                      # Modelos de Machine Learning
+├── notebooks/                   # Jupyter notebooks
+│   └── dados_economicos.ipynb   # Análise de dados econômicos
+│   └── eda_preprocessing.ipynb  # EDA e Preprocessing dos dados
+│   └── model_clustering.ipynb   # Análise Modelo de Clusterização
 ├── src/                         # Utilitários e funções
 │   └── utils/                   # Funções de scraping
-│   └── eda_preprocessing.py
-│   └── train.py
-├── notebooks/                   # Jupyter notebooks
-├── data/                        # Dados processados
-├── requirements.txt             # Dependências Python
+│   └── eda_preprocessing.py     # Funções de eda e preprocessing
+│   └── train.py                 # Funções Teinamento de modelos de ML
+├── dash.py                      # App Streamlit Dashboard
+├── README.md                    # Este arquivo
 ├── render.yaml                  # Configuração de deploy
-└── README.md                    # Este arquivo
+└── requirements.txt             # Dependências Python
 ```
 
 ##  **Instalação e Execução**
@@ -69,7 +82,7 @@ projeto-api-vitivinicultura/
 
 ```bash
 # 1. Clonar o repositório
-git clone https://github.com/joaomendonca-py/projeto-api-vitivinicultura.git
+git clone https:///github.com/ederray/projeto-api-vitivinicultura
 cd projeto-api-vitivinicultura
 
 # 2. Criar ambiente virtual
@@ -166,6 +179,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 | `GET` | `/importacao` | Dados de importação | `ano`, `derivado` |
 | `GET` | `/exportacao` | Dados de exportação | `ano`, `derivado` |
 
+### ** Dados Modelo de Machine Learning** (Requer Autenticação)
+| Método | Endpoint | Descrição | Parâmetros |
+|--------|----------|-----------|------------|
+| `POST` | `/clustering` | Dados de categorização de países | `categorias`|
+
 ### ** Parâmetros**
 
 #### **Tipos de Uva** (`tipo_uva`)
@@ -193,14 +211,14 @@ signup_data = {
     "username": "meu_usuario",
     "password": "minha_senha123"
 }
-response = requests.post("https://vitivinicultura-00fv.onrender.com/auth/signup", json=signup_data)
+response = requests.post("https://projeto-api-vitivinicultura-4xmq.onrender.com/auth/signup", json=signup_data)
 
 # 2. Fazer login
 login_data = {
     "username": "meu_usuario", 
     "password": "minha_senha123"
 }
-response = requests.post("https://vitivinicultura-00fv.onrender.com/auth/login", json=login_data)
+response = requests.post("https://projeto-api-vitivinicultura-4xmq.onrender.com/auth/login", json=login_data)
 token = response.json()["access_token"]
 
 # 3. Usar token nas requisições
@@ -211,20 +229,30 @@ headers = {"Authorization": f"Bearer {token}"}
 ```python
 # Dados de produção de 2022
 response = requests.get(
-    "https://vitivinicultura-00fv.onrender.com/producao?ano=2022",
+    "https://projeto-api-vitivinicultura-4xmq.onrender.com/producao?ano=2022",
     headers=headers
 )
 dados_producao = response.json()
 
 # Processamento de viníferas em 2020
 response = requests.get(
-    "https://vitivinicultura-00fv.onrender.com/processamento?ano=2020&tipo_uva=01",
+    "https://projeto-api-vitivinicultura-4xmq.onrender.com/processamento?ano=2020&tipo_uva=01",
     headers=headers
 )
 dados_processamento = response.json()
+
+# Categorização de países importadores em 4 categorias
+payload = {"categorias":4}
+response = requests.post(
+    "https://projeto-api-vitivinicultura-4xmq.onrender.com/clustering",
+    headers=headers, json=payload
+)
+dados_clustering = response.json()
+
+
 ```
 
-### **Estrutura de Resposta**
+### **Estrutura de Resposta - API Produção**
 ```json
 {
   "ano": 2022,
@@ -235,6 +263,41 @@ dados_processamento = response.json()
     ["Região 2", "800", "1800", "1200"]
   ]
 }
+
+{
+  "ano": 2022,
+  "processo": "Produção",
+  "labels": ["Produto A", "Produto B", "Produto C"],
+  "data": [
+    ["Região 1", "1000", "2000", "1500"],
+    ["Região 2", "800", "1800", "1200"]
+  ]
+}
+```
+### **Estrutura de Resposta - API Clustering**
+```json
+[
+  {
+    "pais": " Paises Baixos",
+    "media_PIB_total_(dolar_corrente)": 0,
+    "media_população_total": 0,
+    "media_PIB_per_capita": 0,
+    "media_taxa_crescimento_PIB": 0,
+    "media_taxa_inflação_(CPI)": 0,
+    "media_expectativa_vida": 0,
+    "media_taxa_alfabetização": 0,
+    "media_exportacao_abs": 0,
+    "media_importacao_abs": 0,
+    "media_IDH_estimado": 0,
+    "soma_qtde_kg": 28229,
+    "soma_valor_dolar_ajustado": 197186.3728384676,
+    "vl_distinto_produto_texto": 1,
+    "vl_distinto_ano": 14,
+    "categoria": 2
+  }
+...
+]
+
 ```
 
 ##  **Deploy no Render**
@@ -251,7 +314,6 @@ A API está deployada no **Render.com** com:
 ### ** URLs**
 - **API**: https://vitivinicultura-00fv.onrender.com
 - **Docs**: https://vitivinicultura-00fv.onrender.com/docs
-- **Health**: https://vitivinicultura-00fv.onrender.com/health
 
 ### ** Configuração (render.yaml)**
 ```yaml
@@ -283,7 +345,7 @@ pytest
 git push origin main  # Deploy automático no Render
 
 # Verificar status da API
-curl https://vitivinicultura-00fv.onrender.com/health
+curl https://projeto-api-vitivinicultura-4xmq.onrender.com/health
 ```
 
 ##  **Documentação**
@@ -344,9 +406,9 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ##  **Suporte**
 
-- **Issues**: [GitHub Issues](https://github.com/joaomendonca-py/projeto-api-vitivinicultura/issues)
-- **Email**: projeto5mlet@gmail.com
-- **Documentação**: https://vitivinicultura-00fv.onrender.com/docs
+- **Issues**: [GitHub Issues](https://github.com/ederray/projeto-api-vitivinicultura/issues)
+- **Email**: eder.ray@gmail.com
+- **Documentação**: https://projeto-api-vitivinicultura-4xmq.onrender.com/docs
 
 ---
 
