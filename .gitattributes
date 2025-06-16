@@ -1,0 +1,27 @@
+# Padroniza final de linha para LF no repositório
+* text=auto eol=lf
+
+# Especificamente para arquivos de código
+*.py text eol=lf
+*.ipynb text eol=lf
+
+# Mantenha binários intocados
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.ico binary
+
+# Evita problemas em CSVs e outros dados textuais
+*.csv text eol=lf
+*.tsv text eol=lf
+
+# Para arquivos de configuração
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.env text eol=lf
+*.txt text eol=lf
+
