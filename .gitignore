@@ -4,6 +4,7 @@ venv/
 
 # Arquivos de ambiente e credenciais
 .env
+.streamlit/
 
 # Cache Python
 __pycache__/

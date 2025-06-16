@@ -1,5 +1,5 @@
 """App Dashboard Projeto Vitivinicultura"""
-from src.train import visualizar_coluna_por_cluster_streamlit
+import os
 import sys
 import streamlit as st
 import pandas as pd
@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import PowerTransformer
-sys.path.append("../projeto-api-vitivinicultura")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+from src.train import visualizar_coluna_por_cluster_streamlit
 
 # Configurações da página
 st.set_page_config(
@@ -51,7 +52,7 @@ senha = st.text_input("Senha", type="password")
 # construção de um botão para realizar autenticação via token
 if st.button("Login"):
     try:
-        auth_url = f"{API_URL}/auth/login"
+        auth_url = f"{API_URL}/auth/token"
         response = requests.post(
             auth_url, data={"username": usuario, "password": senha}, timeout=10)
         if response.status_code == 200:
@@ -76,7 +77,7 @@ n_clusters = st.slider("Selecione o número de categorias:", 2, 11, 2)
 # construção de um botão para gerar os visuis de dados a partir da chamada de api do modelo
 if st.button("Gerar Visualizações"):
     try:
-        clustering_url = f"{API_URL}/modelo_ML/clustering"
+        clustering_url = f"{API_URL}/clustering"
         headers = {"Authorization": f"Bearer {st.session_state.token}"}
         payload = {"categorias": n_clusters}
         # realiza a requisição dos dados no endereço da api com o parâmetro payload
