@@ -9,12 +9,10 @@ import seaborn as sns
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import PowerTransformer
 
-# Caminho absoluto da raiz do projeto (onde está a pasta 'src')
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-
-# Adiciona ao sys.path se não estiver lá
 if PROJECT_ROOT not in sys.path:
-    sys.path.append(PROJECT_ROOT)
+    sys.path.insert(0, PROJECT_ROOT)
+    
 from src.train import visualizar_coluna_por_cluster_streamlit
 
 # Configurações da página
