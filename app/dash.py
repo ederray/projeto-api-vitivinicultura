@@ -1,5 +1,4 @@
 """App Dashboard Projeto Vitivinicultura"""
-from src.train import visualizar_coluna_por_cluster_streamlit
 import sys
 import os
 import streamlit as st
@@ -11,6 +10,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import PowerTransformer
 # Adiciona a raiz do projeto ao sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from src.train import visualizar_coluna_por_cluster_streamlit
 
 # Configurações da página
 st.set_page_config(
