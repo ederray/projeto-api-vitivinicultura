@@ -23,3 +23,6 @@ __pycache__/
 # Logs e dados locais
 *.log
 .DS_Store
+
+
+.devcontainer/
