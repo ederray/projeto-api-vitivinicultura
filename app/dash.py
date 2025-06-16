@@ -1,6 +1,4 @@
 """App Dashboard Projeto Vitivinicultura"""
-from pathlib import Path
-import sys
 import streamlit as st
 import pandas as pd
 import requests
@@ -8,11 +6,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import PowerTransformer
-
-PROJECT_ROOT = Path().cwd().parent.resolve() 
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
-
 from src.train import visualizar_coluna_por_cluster_streamlit
 
 # Configurações da página
