@@ -14,7 +14,7 @@ def obter_dados_import_export(ano:int, derivado:str, processo:str, tag_page:str)
     opcao=opt_{tag_page}&subopcao=subopt_{derivado}'
 
     # conexão com a página html.
-    response = requests.get(url, timeout=200)
+    response = requests.get(url, timeout=20)
 
     # construção do objeto Beautifulsoap e análise da página html.
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -76,7 +76,7 @@ def obter_dados_pagina_import_export(ano:int, processo:str, tag_page:str):
         opcao=opt_{tag_page}&subopcao=subopt_{derivado}'
 
         # conexão com a página html.
-        response = requests.get(url, timeout=200)
+        response = requests.get(url, timeout=15)
 
         # construção do objeto Beautifulsoap e análise da página html.
         soup = BeautifulSoup(response.text, 'html.parser')

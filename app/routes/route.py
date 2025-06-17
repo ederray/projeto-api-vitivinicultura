@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from config.models import ProducaoComercializacao, Processamento, ImportacaoExportacao, User
 from config.database import data_collection
 from config.schema import (obter_item_processamento_db, obter_item_prod_com_db,
-                            obter_item_import_export_db)
+                           obter_item_import_export_db)
 from src.utils.func_proces import obter_dados_processamento
 from src.utils.func_prod_com import obter_dados_prod_com
 from src.utils.func_imp_exp import obter_dados_import_export
@@ -15,7 +15,7 @@ from src.utils.func_db import setup_redis
 from .auth import get_current_user
 
 # instância do objeto redis para gerar o cache das rotas.
-redis= setup_redis()
+redis = setup_redis()
 
 # construção do objeto de rota
 router = APIRouter()
@@ -52,7 +52,7 @@ async def producao(ano: int):
             cache = json.dumps(dados_web)
             redis.set(f'{ano}-Produção', cache)
             # adiciona o período de tempo de armazenamento.
-            redis.expire(f'{ano}-Produção', 60)
+            redis.expire(f'{ano}-Produção', 3600)
             return dados_web
     # retorno do exception
     except HTTPException as e:
@@ -73,7 +73,7 @@ async def producao(ano: int):
             cache = json.dumps(dados_mongo_db)
             redis.set(f'{ano}-Produção', cache)
             # adiciona o período de tempo de armazenamento.
-            redis.expire(f'{ano}-Produção', 60)
+            redis.expire(f'{ano}-Produção', 3600)
             return obter_item_prod_com_db(dados_mongo_db)
 
 # construção da rota de processamento
@@ -99,7 +99,7 @@ async def processamento(ano: int, tipo_uva: str):
             cache = json.dumps(dados_web)
             redis.set(f'{ano}-{tipo_uva}', cache)
             # adiciona o período de tempo de armazenamento.
-            redis.expire(f'{ano}-{tipo_uva}', 60)
+            redis.expire(f'{ano}-{tipo_uva}', 3600)
             return dados_web
     # retorno do exception
     except HTTPException as e:
@@ -120,7 +120,7 @@ async def processamento(ano: int, tipo_uva: str):
             cache = json.dumps(dados_mongo_db)
             redis.set(f'{ano}-{tipo_uva}', cache)
             # adiciona o período de tempo de armazenamento.
-            redis.expire(f'{ano}-{tipo_uva}', 60)
+            redis.expire(f'{ano}-{tipo_uva}', 3600)
             return obter_item_processamento_db(dados_mongo_db)
 
 # construção da rota de produção
@@ -145,7 +145,7 @@ async def comercializacao(ano: int):
             cache = json.dumps(dados_web)
             redis.set(f'{ano}-Comercialização', cache)
             # adiciona o período de tempo de armazenamento.
-            redis.expire(f'{ano}-Comercialização', 60)
+            redis.expire(f'{ano}-Comercialização', 3600)
             return dados_web
     # retorno do exception
     except HTTPException as e:
@@ -166,7 +166,7 @@ async def comercializacao(ano: int):
             cache = json.dumps(dados_mongo_db)
             redis.set(f'{ano}-Comercialização', cache)
             # adiciona o período de tempo de armazenamento.
-            redis.expire(f'{ano}-Comercialização', 60)
+            redis.expire(f'{ano}-Comercialização', 3600)
             return obter_item_prod_com_db(dados_mongo_db)
 
 # construção da rota de importação
@@ -193,7 +193,7 @@ async def importacao(ano: int, derivado: str):
             cache = json.dumps(dados_web)
             redis.set(f'{ano}-{derivado}-Importação', cache)
             # adiciona o período de tempo de armazenamento.
-            redis.expire(f'{ano}-{derivado}-Importação', 60)
+            redis.expire(f'{ano}-{derivado}-Importação', 3600)
             return dados_web
     # retorno do exception
     except HTTPException as e:
@@ -214,7 +214,7 @@ async def importacao(ano: int, derivado: str):
             cache = json.dumps(dados_mongo_db)
             redis.set(f'{ano}-{derivado}-Importação', cache)
             # adiciona o período de tempo de armazenamento.
-            redis.expire(f'{ano}-{derivado}-Importação', 60)
+            redis.expire(f'{ano}-{derivado}-Importação', 3600)
             return obter_item_import_export_db(dados_mongo_db)
 
 # construção da rota de exportação
@@ -240,7 +240,7 @@ async def exportacao(ano: int, derivado: str):
             cache = json.dumps(dados_web)
             redis.set(f'{ano}-{derivado}-Exportação', cache)
             # adiciona o período de tempo de armazenamento.
-            redis.expire(f'{ano}-{derivado}-Exportação', 60)
+            redis.expire(f'{ano}-{derivado}-Exportação', 3600)
             return dados_web
     # retorno do exception
     except HTTPException as e:
@@ -261,5 +261,5 @@ async def exportacao(ano: int, derivado: str):
             cache = json.dumps(dados_mongo_db)
             redis.set(f'{ano}-{derivado}-Exportação', cache)
             # adiciona o período de tempo de armazenamento.
-            redis.expire(f'{ano}-{derivado}-Exportação', 60)
+            redis.expire(f'{ano}-{derivado}-Exportação', 3600)
             return obter_item_import_export_db(dados_mongo_db)

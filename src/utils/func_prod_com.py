@@ -15,7 +15,7 @@ def obter_dados_prod_com(ano:int, processo:str, tag_page=str):
     opcao=opt_{tag_page}'
 
     # conexão com a página html.
-    response = requests.get(url, timeout=200)
+    response = requests.get(url, timeout=20)
 
     # construção do objeto Beautifulsoap e análise da página html.
     soup = BeautifulSoup(response.text, 'html.parser')

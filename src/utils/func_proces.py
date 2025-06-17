@@ -14,7 +14,7 @@ def obter_dados_processamento(ano, tipo_uva):
     opcao=opt_03&subopcao=subopt_{tipo_uva}'
 
     # conexão com a página html.
-    response = requests.get(url, timeout=200)
+    response = requests.get(url, timeout=20)
 
     # construção do objeto Beautifulsoap e análise da página html.
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -68,7 +68,7 @@ def obter_dados_pagina_processamento(ano):
             &opcao=opt_03&subopcao=subopt_{tipo_uva}'
 
         # conexão com a página html.
-        response = requests.get(url, timeout=200)
+        response = requests.get(url, timeout=20)
 
         # construção do objeto Beautifulsoap e análise da página html.
         soup = BeautifulSoup(response.text, 'html.parser')
